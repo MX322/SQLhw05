@@ -1,0 +1,23 @@
+CREATE VIEW ShowTeacher AS
+SELECT Book.name
+FROM Book JOIN T_Cards ON  T_Cards.id_book = Book.id
+JOIN Teacher ON T_Cards.id_teacher = Teacher.id
+WHERE T_Cards.date_in IS NOT NULL
+
+CREATE VIEW EmptyStudent AS
+SELECT Student.first_name
+FROM Book JOIN S_Cards ON  S_Cards.id_book = Book.id
+JOIN Student ON S_Cards.id_student = Student.id
+WHERE S_Cards.date_in IS  NULL
+
+CREATE VIEW ActiveLibriean AS
+SELECT MAX(l.first_name) AS ActiveLibriean
+FROM T_Cards tc JOIN Librarian l ON tc.id_librarian = l.id
+JOIN Book b ON tc.id_book = b.id
+WHERE tc.date_in IS NOT NULL
+
+CREATE VIEW ResponsibleLibriean AS
+SELECT MAX(l.first_name) AS ActiveLibriean
+FROM T_Cards tc JOIN Librarian l ON tc.id_librarian = l.id
+JOIN Book b ON tc.id_book = b.id
+WHERE tc.date_out IS NOT NULL
